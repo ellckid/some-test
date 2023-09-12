@@ -1,0 +1,30 @@
+.like_btn {
+    display: flex;
+    height: 32px;
+    width: 67px;
+    gap: 8px;
+    align-items: center;
+
+    color: #4F4F4F;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    fill: #959298;
+
+    cursor: pointer;
+}
+
+.like_img {
+    width: 32px;
+    height: 32px;
+}
+
+.fillGreen {
+    fill: #219653;
+}
+
+.fillRed {
+    fill: #EB5757;
+}

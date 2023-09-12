@@ -1,0 +1,76 @@
+.postPage {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1140px;
+    height: 100%;
+    padding: 64px 0;
+    gap: 32px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.postPage_nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.postPage_link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: var(--Black, #0A0A0A);
+    font-family: Roboto;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px;
+
+}
+
+.likeBtn_container {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+
+.postPage_h1 {
+    color: var(--Black, #0A0A0A);
+    text-align: center;
+    font-family: Roboto;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 48px;
+
+    margin-bottom: 16px;
+}
+
+.postPage_section {
+    display: flex;
+    width: 100%;
+    max-width: 848px;
+    flex-direction: column;
+    gap: 48px;
+
+    margin: 0 auto;
+}
+
+.section_img {
+    width: 100%;
+}
+
+.section_h4 {
+    color: var(--Black, #0A0A0A);
+    font-family: Roboto;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px;
+}

@@ -1,0 +1,6 @@
+.pages_container {
+    display: flex;
+    max-width: 1340px;
+    width: 90%;
+    margin: 0 auto;
+}
