@@ -5,8 +5,7 @@ export type PostInfo = {
     body: string
     likes: number | undefined,
     dislikes: number | undefined
-    isLiked: boolean | undefined
-    isDisLiked: boolean | undefined
+    isCliked: "like" | "dislike"
 }
 
 

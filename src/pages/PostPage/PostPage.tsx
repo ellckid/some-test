@@ -10,7 +10,7 @@ import { PostInfo } from '../../types/types'
 import PostService from '../../services/PostService'
 // components
 import { Link } from 'react-router-dom'
-import LikeButton from '../../components/LikeButton/LikeButton'
+import LikeButton from '../../components/LikeButton/LikeButtons'
 
 
 function PostPage() {

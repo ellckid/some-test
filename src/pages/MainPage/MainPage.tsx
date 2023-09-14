@@ -21,10 +21,8 @@ function MainPage() {
         _.forEach(posts, (el) => {
             el.likes = getRandomLikes()
             el.dislikes = getRandomLikes()
-            el.isLiked = false
-            el.isDisLiked = false
         })
-        setBigPost(posts?.filter(el => el.id == 1))
+        setBigPost(posts?.filter(el => el.id == 1)) // поправить индексы
         setPostList(posts?.filter(el => el.id != 1))
         if (posts) {
             store.setPosts(posts)
@@ -65,14 +63,14 @@ function MainPage() {
             </div>
             <Search searchFunc={searchByTitle} ></Search>
             {
-                _.map(bigPost, (item, key) => (
-                    <BigPost key={key} id={item.id} title={item.title} likes={item.likes} dislikes={item.dislikes} description={item.body} isLiked={item.isLiked} isDisLiked={item.isDisLiked} imgUrl={'https://placehold.co/1140x600/orange/white'}></BigPost>
-                ))
+                // _.map(bigPost, (item, key) => (
+                //     <BigPost key={key} id={item.id} title={item.title} likes={item.likes} dislikes={item.dislikes} description={item.body} isLiked={'like'} isDisLiked={item.isDisLiked} imgUrl={'https://placehold.co/1140x600/orange/white'}></BigPost>
+                // ))
             }
             <section className={classes.mainPage_posts}>
                 {
                     _.map(postList, (item, id) => (
-                        <Post key={id} id={item.id} title={item.title} likes={item.likes} dislikes={item.dislikes} isLiked={item.isLiked} isDisLiked={item.isDisLiked} imgUrl={'https://placehold.co/600x400/orange/white'} ></Post>
+                        <Post key={id} id={item.id} title={item.title} likes={item.likes} dislikes={item.dislikes} isClicked={'like'} imgUrl={'https://placehold.co/600x400/orange/white'} ></Post>
                     ))
                 }
             </section>

@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom'
 // classes
 import classes from './BigPost.module.css'
-import LikeButton from '../LikeButton/LikeButton'
+import LikeButton from '../LikeButton/LikeButtons'
 
 
 type BigPostProps = {
