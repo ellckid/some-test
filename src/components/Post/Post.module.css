@@ -69,9 +69,3 @@
 
     cursor: pointer;
 }
-
-.post__likes_dislikes {
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
-}

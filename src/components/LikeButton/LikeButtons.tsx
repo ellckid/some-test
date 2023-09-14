@@ -3,8 +3,8 @@ import { useState } from 'react'
 // classes
 import './LikeButtons.css'
 import classNames from 'classnames'
-import Like from '../UI/Like'
-import DisLike from '../UI/DisLike'
+import Like from '../UI/Likes/Like'
+import DisLike from '../UI/Likes/DisLike'
 
 
 type LikeButtonsProps = {
@@ -17,11 +17,11 @@ function LikeButtons(props: LikeButtonsProps) {
     const [disLikes, setDisLikes] = useState(props.disLikes)
     const [isPressed, setIsPressed] = useState(props.isClicked);
 
-    const like_img_class = classNames('like_img', 'like_btn',
+    const like_img_class = classNames('like_btn',
         {
             'fillGreen': isPressed == 'like',
         })
-    const dislike_img_class = classNames('like_img', 'like_btn',
+    const dislike_img_class = classNames('like_btn',
         {
             'fillRed': isPressed == 'dislike'
         })
@@ -30,25 +30,19 @@ function LikeButtons(props: LikeButtonsProps) {
     function handleClick(type: 'like' | 'dislike') {
         if (likes && disLikes) {
             if (isPressed != false) {
-                if (type == 'dislike') {
-                    setDisLikes(disLikes - 1)
-                    setIsPressed(false)
-                }
-                if (type == 'like') {
-                    setLikes(likes - 1)
-                    setIsPressed(false)
-                }
-                // console.log('кнопка отжата')
-            } else {
+                setDisLikes(props.disLikes)
+                setLikes(props.likes)
+                setIsPressed(false)
+            }
+            if (isPressed == false) {
                 if (type == 'dislike') {
                     setDisLikes(disLikes + 1)
-                    setIsPressed(type)
+                    setIsPressed('dislike')
                 }
-                if (type == 'like') {
+                if (type == "like") {
                     setLikes(likes + 1)
-                    setIsPressed(type)
+                    setIsPressed('like')
                 }
-                // console.log('кнопка нажата')
             }
         }
     }
@@ -58,7 +52,8 @@ function LikeButtons(props: LikeButtonsProps) {
             <span className={like_img_class} onClick={() => {
                 handleClick('like')
             }}>
-                <Like></Like>{likes}
+                <Like></Like>
+                {likes}
             </span>
             <span className={dislike_img_class} onClick={() => {
                 handleClick('dislike')
