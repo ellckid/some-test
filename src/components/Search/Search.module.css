@@ -25,11 +25,7 @@
     line-height: 24px;
 }
 
+
 .search__input:focus {
     color: #0A0A0A;
-}
-
-.search_icon {
-    width: 24px;
-    height: 24px;
 }

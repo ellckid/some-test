@@ -35,5 +35,20 @@ export default class Store {
             this.setLoading(false)
         }
     }
+
+    async getPostByTitle(title: string) {
+        this.setLoading(true);
+        try {
+            const response = (await PostService.getPostByTitle(title))
+            console.log(response)
+            this.setPosts(response)
+            return response
+        } catch (e) {
+            console.log(e)
+        }
+        finally {
+            this.setLoading(false)
+        }
+    }
 }
 

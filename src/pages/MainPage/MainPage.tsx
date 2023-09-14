@@ -1,5 +1,5 @@
 // libraries
-import { useContext, useMemo, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import _ from 'lodash'
 import { observer } from 'mobx-react-lite'
 // classes
@@ -14,44 +14,54 @@ import BigPost from '../../components/BigPost/BigPost'
 
 function MainPage() {
     const { store } = useContext(context)
-    const [bigPost, setBigPost] = useState<PostInfo[] | undefined>([])
-    const [postList, setPostList] = useState<PostInfo[] | undefined>([])
+    const [bigPost, setBigPost] = useState<PostInfo>()
+    const [postList, setPostList] = useState<PostInfo[]>([])
 
     function setPosts(posts: PostInfo[] | undefined) {
-        _.forEach(posts, (el) => {
-            el.likes = getRandomLikes()
-            el.dislikes = getRandomLikes()
-        })
-        setBigPost(posts?.filter(el => el.id == 1)) // поправить индексы
-        setPostList(posts?.filter(el => el.id != 1))
         if (posts) {
+            _.forEach(posts, (el) => {
+                el.likes = getRandomLikes()
+                el.dislikes = getRandomLikes()
+                el.isCliked = false
+            })
+            setBigPost(posts.filter((el) => posts.indexOf(el) == 0)[0])
+            console.log(bigPost?.likes)
+            console.log(bigPost?.dislikes)
+            setPostList(posts.filter((el) => posts.indexOf(el) != 0))
+
             store.setPosts(posts)
         }
     }
 
     async function getPosts() {
         try {
-            const response = (await store.getPostList())
+            const response = await store.getPostList()
             setPosts(response)
+
         } catch (e) {
             console.log(e)
         }
     }
+
     async function searchByTitle(searchString: string) {
         try {
-            const response = (await store.getPostList())?.filter(el => el.title.match(searchString))
-            setPosts(response)
+            const response = await store.getPostByTitle(searchString)
+            if (searchString.trim()) {
+                setPosts(response)
+            } else {
+                getPosts()
+            }
         } catch (e) {
             console.log(e)
         }
-        return postList
     }
+
     function getRandomLikes() {
         return Math.floor(Math.random() * 50 + 1)
     }
 
 
-    useMemo(() => {
+    useEffect(() => {
         getPosts()
     }, [])
 
@@ -62,15 +72,12 @@ function MainPage() {
                 <h2 className={classes.mainPage_h2}>Здесь мы делимся интересными кейсами из наших проектов, пишем про IT, а также переводим зарубежные статьи</h2>
             </div>
             <Search searchFunc={searchByTitle} ></Search>
-            {
-                // _.map(bigPost, (item, key) => (
-                //     <BigPost key={key} id={item.id} title={item.title} likes={item.likes} dislikes={item.dislikes} description={item.body} isLiked={'like'} isDisLiked={item.isDisLiked} imgUrl={'https://placehold.co/1140x600/orange/white'}></BigPost>
-                // ))
-            }
+
+            {bigPost && <BigPost id={bigPost.id} title={bigPost.title} likes={bigPost.likes} dislikes={bigPost.dislikes} description={bigPost.body} isClicked={bigPost.isCliked} imgUrl={'https://placehold.co/1140x600/orange/white'}></BigPost>}
             <section className={classes.mainPage_posts}>
                 {
                     _.map(postList, (item, id) => (
-                        <Post key={id} id={item.id} title={item.title} likes={item.likes} dislikes={item.dislikes} isClicked={'like'} imgUrl={'https://placehold.co/600x400/orange/white'} ></Post>
+                        <Post key={id} id={item.id} title={item.title} likes={item.likes} dislikes={item.dislikes} isClicked={item.isCliked} imgUrl={'https://placehold.co/600x400/orange/white'} ></Post>
                     ))
                 }
             </section>

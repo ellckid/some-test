@@ -2,22 +2,20 @@
 import { useNavigate } from 'react-router-dom'
 // classes
 import classes from './BigPost.module.css'
-import LikeButton from '../LikeButton/LikeButtons'
+import LikeButtons from '../LikeButton/LikeButtons'
 
 
 type BigPostProps = {
-    id: number
-    title: string
+    id: number | undefined
+    title: string | undefined
     likes: number | undefined
     dislikes: number | undefined
-    isLiked: boolean | undefined
-    isDisLiked: boolean | undefined
-    description: string
-    imgUrl: string
+    isClicked: 'like' | 'dislike' | false
+    description: string | undefined
+    imgUrl: string | undefined
 }
 function BigPost(props: BigPostProps) {
     const router = useNavigate()
-
     return (
         <article className={classes.post}>
             <a className={classes.post__link} onClick={() => router('/some-test/' + props.id)} ><img className={classes.post__img} src={props.imgUrl}></img></a>
@@ -25,8 +23,7 @@ function BigPost(props: BigPostProps) {
                 <div className={classes.post__btn_container}>
                     <h3 className={classes.post__h3}>{props.title}</h3>
                     <div className={classes.post__likes_dislikes}>
-                        <LikeButton isLike={true} likes={props.likes} isClicked={props.isLiked}></LikeButton>
-                        <LikeButton isLike={false} likes={props.dislikes} isClicked={props.isDisLiked}></LikeButton>
+                        <LikeButtons likes={props.likes} disLikes={props.dislikes} isClicked={props.isClicked}></LikeButtons>
                     </div>
                 </div>
                 <h4 className={classes.post__h4}>{props.description}</h4>

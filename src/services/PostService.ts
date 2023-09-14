@@ -3,10 +3,16 @@ import { PostInfo } from "../types/types";
 
 export default class PostService {
     static async getPostList() {
-        return $api.get<Array<PostInfo>>('/posts').then(res => res.data)
+        return $api.get<PostInfo[]>('/posts').then(res => res.data)
     }
-    static async getPost(id: string | undefined) {
-        const params = { id }
+    static async getPostByTitle(title: string) {
+        const params = {
+            "title": title
+        }
+
+        return $api.get<PostInfo[]>(`/posts/`, { params }).then(res => res.data)
+    }
+    static async getPost(id: string) {
         return $api.get<PostInfo>(`/posts/${id}`,).then(res => res.data)
     }
 }
