@@ -3,8 +3,8 @@ export type PostInfo = {
     id: number
     title: string
     body: string
-    likes: number | undefined,
-    dislikes: number | undefined
+    likes: number,
+    dislikes: number,
     isCliked: "like" | "dislike" | false
 }
 

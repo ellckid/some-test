@@ -1,6 +1,5 @@
 // libraries
 import { useParams } from 'react-router-dom'
-import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 // classes
@@ -10,33 +9,28 @@ import { PostInfo } from '../../types/types'
 import PostService from '../../services/PostService'
 // components
 import { Link } from 'react-router-dom'
-import LikeButton from '../../components/LikeButton/LikeButtons'
+import LikeButtons from '../../components/LikeButton/LikeButtons'
 
 
 function PostPage() {
     const [post, setPost] = useState<PostInfo>()
-    const id = useParams()
+    const params = useParams<string>()
 
-    async function getPost(id: {}) {
-        let param
-        _.forEach(id, (el) => {
-            param = el
-        })
-        const res = await PostService.getPost(param)
+    async function getPost(param: object) {
+        const res = await PostService.getPost(param.toString())
         setPost(res)
     }
 
     useEffect(() => {
-        getPost(id)
-    }, [])
+        getPost(params)
+    })
 
     return (
         <main className={classes.postPage} >
             <nav className={classes.postPage_nav}>
                 <Link to='/some-test/' className={classes.postPage_link}><img className={classes.link_img} src='/some-test/keyboard_backspace.svg' alt='back arrow'></img>Вернуться к статьям</Link>
                 <div className={classes.likeBtn_container}>
-                    <LikeButton isLike={true} likes={100}></LikeButton>
-                    <LikeButton isLike={false} likes={50}></LikeButton>
+                    <LikeButtons likes={100} disLikes={50} isClicked={'dislike'}></LikeButtons>
                 </div>
             </nav>
             <h1 className={classes.postPage_h1}>{post?.title}</h1>

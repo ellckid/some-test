@@ -6,14 +6,15 @@ import LikeButtons from '../LikeButton/LikeButtons'
 
 
 type BigPostProps = {
-    id: number | undefined
-    title: string | undefined
-    likes: number | undefined
-    dislikes: number | undefined
+    id: number
+    title: string
+    likes: number
+    dislikes: number
     isClicked: 'like' | 'dislike' | false
-    description: string | undefined
-    imgUrl: string | undefined
+    description: string
+    imgUrl: string
 }
+
 function BigPost(props: BigPostProps) {
     const router = useNavigate()
     return (

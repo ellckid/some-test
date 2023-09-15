@@ -8,11 +8,12 @@ import LikeButtons from '../LikeButton/LikeButtons'
 type PostProps = {
     id: number
     title: string
-    likes: number | undefined
-    dislikes: number | undefined
+    likes: number
+    dislikes: number
     isClicked: "like" | "dislike" | false
     imgUrl: string
 }
+
 function Post(props: PostProps) {
     const router = useNavigate()
 
