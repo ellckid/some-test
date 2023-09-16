@@ -1,20 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import PostService from "../../services/postService";
 import { PostInfo } from "../../types/types";
+import $api from "../../http";
 
-export const getPost = createAsyncThunk<PostInfo[]>('posts/getAll', async (): Promise<PostInfo[]> => {
-    try {
-        return await PostService.getPostList()
-    } catch (error) {
-        return [{ id: 0, userId: 0, title: '', body: '' }]
-    }
-})
+export const getPost = createAsyncThunk<PostInfo[]>('posts/getAll',
+    async (): Promise<PostInfo[]> => {
+        try {
+            return await $api.get<PostInfo[]>(`/posts`).then(res => res.data)
+        } catch (error) {
+            return [{ id: 0, userId: 0, title: '', body: '' }]
+        }
+    })
 export const getPostByTitle = createAsyncThunk<PostInfo[], string>('posts/getByTitle', async (title: string): Promise<PostInfo[]> => {
     try {
         if (title.trim()) {
-            return await PostService.getPostByTitle(title)
+            return await $api.get<PostInfo[]>(`/posts/?title=${title}`).then(res => res.data)
         } else if (title.length == 0) {
-            return await PostService.getPostList()
+            return await $api.get<PostInfo[]>(`/posts`).then(res => res.data)
         } else {
             return [{ id: 0, userId: 0, title: '', body: '' }]
         }
@@ -26,7 +27,7 @@ export const getPostByTitle = createAsyncThunk<PostInfo[], string>('posts/getByT
 })
 export const getPostById = createAsyncThunk<PostInfo, number>('posts/getById', async (id: number): Promise<PostInfo> => {
     try {
-        return await PostService.getPostById(id)
+        return await $api.get<PostInfo>(`/posts/${id}`).then(res => res.data)
     } catch (error) {
         return { id: 0, userId: 0, title: '', body: '' }
     }
