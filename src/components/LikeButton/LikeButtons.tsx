@@ -1,67 +1,50 @@
 // libraries
-import { useState } from 'react'
+import classNames from 'classnames'
+// service
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { useActions } from '../../hooks/useAction'
 // classes
 import './LikeButtons.css'
-import classNames from 'classnames'
+// components
 import Like from '../UI/Likes/Like'
 import DisLike from '../UI/Likes/DisLike'
 
 
 type LikeButtonsProps = {
-    likes: number | undefined
-    disLikes: number | undefined
-    isClicked: "like" | "dislike" | false
+    postId: number | undefined
 }
 function LikeButtons(props: LikeButtonsProps) {
-    const [likes, setLikes] = useState(props.likes)
-    const [disLikes, setDisLikes] = useState(props.disLikes)
-    const [isPressed, setIsPressed] = useState(props.isClicked);
+    const postLikes = useTypedSelector(state => state.posts.postLikes)
+    const post = postLikes.find(el => el.postId == props.postId)
+    const { setPostStat } = useActions()
 
     const like_img_class = classNames('like_btn',
         {
-            'fillGreen': isPressed == 'like',
+            'fillGreen': post?.isCliked === 'like',
         })
     const dislike_img_class = classNames('like_btn',
         {
-            'fillRed': isPressed == 'dislike'
+            'fillRed': post?.isCliked === 'dislike'
         })
-
-
-    function handleClick(type: 'like' | 'dislike') {
-        if (likes && disLikes) {
-            if (isPressed != false) {
-                setDisLikes(props.disLikes)
-                setLikes(props.likes)
-                setIsPressed(false)
-            }
-            if (isPressed == false) {
-                if (type == 'dislike') {
-                    setDisLikes(disLikes + 1)
-                    setIsPressed('dislike')
-                }
-                if (type == "like") {
-                    setLikes(likes + 1)
-                    setIsPressed('like')
-                }
-            }
-        }
-    }
 
     return (
         <div className={'like_dislike_container'}>
+
             <span className={like_img_class} onClick={() => {
-                handleClick('like')
+                if (post)
+                    setPostStat({ id: post?.postId, type: 'like' })
             }}>
                 <Like></Like>
-                {likes}
+                {post?.likes}
             </span>
             <span className={dislike_img_class} onClick={() => {
-                handleClick('dislike')
+                if (post)
+                    setPostStat({ id: post?.postId, type: 'dislike' })
             }}>
                 <DisLike></DisLike>
-                {disLikes}
+                {post?.dislikes}
             </span>
-        </div>
+        </div >
     )
 }
 export default LikeButtons

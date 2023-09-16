@@ -1,54 +1,20 @@
-// libraries
-import { makeAutoObservable } from "mobx";
-// service
-import { PostInfo } from "../types/types";
-import PostService from "../services/PostService";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { createLogger } from "redux-logger";
+import { reducer as postReducers } from './posts/posts.slice'
 
+const logger = createLogger({
+    collapsed: true
+})
 
+const reducers = combineReducers({
+    posts: postReducers
+})
 
-export default class Store {
-    posts: PostInfo[] = [];
-    isLoading = false;
+export const store = configureStore({
+    reducer: reducers,
+    middleware: (getDefaultMiddleWare) => getDefaultMiddleWare().concat(logger)
+})
 
-    constructor() {
-        makeAutoObservable(this);
-    }
-    setPosts(posts: PostInfo[]) {
-        this.posts = posts;
-    }
-    setLoading(bool: boolean) {
-        this.isLoading = bool;
-    }
-
-
-    async getPostList() {
-        this.setLoading(true);
-        try {
-            const response = (await PostService.getPostList())
-            console.log(response)
-            this.setPosts(response)
-            return response
-        } catch (e) {
-            console.log(e)
-        }
-        finally {
-            this.setLoading(false)
-        }
-    }
-
-    async getPostByTitle(title: string) {
-        this.setLoading(true);
-        try {
-            const response = (await PostService.getPostByTitle(title))
-            console.log(response)
-            this.setPosts(response)
-            return response
-        } catch (e) {
-            console.log(e)
-        }
-        finally {
-            this.setLoading(false)
-        }
-    }
-}
-
+// Infer the `RootState` and `AppDispatch` types from the store itself
+// Чтобы получать тип самого стор
+export type RootState = ReturnType<typeof store.getState>

@@ -1,21 +1,16 @@
-import React, { createContext } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import Store from './store/store.ts'
+import { Provider } from 'react-redux'
+import { store } from './store/store.ts'
 
-const store = new Store();
-export const context = createContext({
-    store
-})
+// Аргумент типа "HTMLElement | null" нельзя назначить параметру типа "Element | DocumentFragment".
+// Тип "null" не может быть назначен для типа "Element | DocumentFragment".ts(2345) для этого !
 
-const root = ReactDOM.createRoot(document.getElementById('root') || document.createElement('div'))
-
-root.render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <context.Provider value={{
-            store
-        }}>
+        <Provider store={store}>
             <App />
-        </context.Provider>
+        </Provider>
     </React.StrictMode >,
 )

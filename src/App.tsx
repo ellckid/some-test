@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import classes from './App.module.css'
 import Router from './components/Router'
 import { BrowserRouter } from 'react-router-dom';
@@ -14,4 +13,4 @@ function App() {
     )
 }
 
-export default observer(App)
+export default App

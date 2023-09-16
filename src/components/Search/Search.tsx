@@ -2,29 +2,29 @@
 import { useCallback, useState } from 'react'
 // classes
 import classes from './Search.module.css'
+// service
+import { useActions } from '../../hooks/useAction'
+//components
 import SearchIcon from '../UI/SearchIcon/SearchIcon'
 
-type searchProps = {
-    searchFunc: (arg: string) => void
-}
-
-function Search(props: searchProps) {
+function Search() {
     const [searchString, setSearchString] = useState('')
+    const { getPostByTitle } = useActions()
 
-    useCallback(() => {
-        props.searchFunc(searchString)
+    const handleSubmit = useCallback(() => {
+        getPostByTitle(searchString)
     }, [searchString])
 
     return (
         <form className={classes.search} onSubmit={(e) => {
             e.preventDefault()
-            props.searchFunc(searchString)
+            handleSubmit()
         }}>
             <SearchIcon></SearchIcon>
-            <input className={classes.search__input} type='search' placeholder='Поиск по названию статьи' value={searchString} onChange={e => {
+            <input className={classes.search__input} type='search' placeholder='Поиск по названию статьи' onChange={e => {
                 setSearchString(e.target.value)
             }}></input>
-        </form>
+        </form >
     )
 }
 
