@@ -18,7 +18,7 @@ React ts приложение для отображения постов
 ## Ссылка на сайт
 
 ```
-
+https://ellckid.github.io/some-test/
 
 ```
 
