@@ -3,7 +3,11 @@ import PostService from "../../services/postService";
 import { PostInfo } from "../../types/types";
 
 export const getPost = createAsyncThunk<PostInfo[]>('posts/getAll', async (): Promise<PostInfo[]> => {
-    return await PostService.getPostList()
+    try {
+        return await PostService.getPostList()
+    } catch (error) {
+        return [{ id: 0, userId: 0, title: '', body: '' }]
+    }
 })
 export const getPostByTitle = createAsyncThunk<PostInfo[] | undefined, string>('posts/getByTitle', async (title: string): Promise<PostInfo[]> => {
     try {
