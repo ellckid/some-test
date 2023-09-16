@@ -6,15 +6,17 @@ const logger = createLogger({
     collapsed: true
 })
 
-const reducers = combineReducers({
+const rootReducers = combineReducers({
     posts: postReducers
 })
 
+
+
 export const store = configureStore({
-    reducer: reducers,
+    reducer: rootReducers,
     middleware: (getDefaultMiddleWare) => getDefaultMiddleWare().concat(logger)
 })
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
+// Infer the `RootState`  types from the store itself
 // Чтобы получать тип самого стор
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof rootReducers>
