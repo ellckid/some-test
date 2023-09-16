@@ -9,7 +9,7 @@ export const getPost = createAsyncThunk<PostInfo[]>('posts/getAll', async (): Pr
         return [{ id: 0, userId: 0, title: '', body: '' }]
     }
 })
-export const getPostByTitle = createAsyncThunk<PostInfo[] | undefined, string>('posts/getByTitle', async (title: string): Promise<PostInfo[]> => {
+export const getPostByTitle = createAsyncThunk<PostInfo[], string>('posts/getByTitle', async (title: string): Promise<PostInfo[]> => {
     try {
         if (title.trim()) {
             return await PostService.getPostByTitle(title)
