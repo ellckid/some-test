@@ -11,5 +11,4 @@ export default class PostService {
     static async getPostById(id: number) {
         return $api.get<PostInfo>(`/posts/${id}`).then(res => res.data)
     }
-
 }

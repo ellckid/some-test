@@ -19,4 +19,4 @@ export const store = configureStore({
 
 // Infer the `RootState`  types from the store itself
 // Чтобы получать тип самого стор
-export type RootState = ReturnType<typeof rootReducers>
+export type RootState = ReturnType<typeof store.getState>
